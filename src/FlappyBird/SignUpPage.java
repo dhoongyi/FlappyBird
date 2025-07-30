@@ -101,11 +101,11 @@ public class SignUpPage extends JFrame {
 						){
 					
 						stmt.setString(1, user.getUserName());
-						if(!EmailValidator.isEmailExists(userEmail) || !EmailValidator.isValidateEmail(userEmail)) {
+						if(!EmailValidator.isEmailExists(userEmail) && EmailValidator.isValidateEmail(userEmail)) {
 							stmt.setString(2, user.getUserEmail());
 						}else {
 							JOptionPane.showMessageDialog(null, "Email Already Exist or Invalid Email dected");
-//							throw new Error("Email Already Exist o
+//							throw new Error("Email Already Exist or Invalid Email);
 							return;
 						}
 						stmt.setString(3, user.getUserPassword());
