@@ -87,11 +87,17 @@ public class LoginPage extends JFrame {
 				String userPassword = new String(txtPassword.getText());
 				
 				if(AuthService.isLogin(userEmail, userPassword) && EmailValidator.isEmailExists(userEmail) && EmailValidator.isValidateEmail(userEmail)) {
+					LoggedUserInfo.getInstance().setUserEmail(userEmail);
+					LoggedUserInfo.getInstance().setUserId(AuthService.getUserId(userEmail));
+					LoggedUserInfo.getInstance().setUserName(AuthService.getUserName(userEmail));
+					
 					JOptionPane.showMessageDialog(null, "Login successfully");
 					System.out.println("Login Successfully");
+					
 				}else {
 					JOptionPane.showMessageDialog(null, "Login Failed");
 					System.out.println("Login Failed");
+					
 				}
 			}
 		});

@@ -117,6 +117,10 @@ public class SignUpPage extends JFrame {
 					if(rowInsert > 0) {
 						JOptionPane.showMessageDialog(null, "User Registered Successfully");
 						System.out.println("User registered successfully");
+						
+						LoginPage login = new LoginPage();
+						login.setVisible(true);
+						setVisible(false);
 					}
 				}catch(SQLException e1) {
 					e1.printStackTrace();
