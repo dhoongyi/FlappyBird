@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
@@ -22,6 +24,7 @@ import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
+import javax.swing.SwingConstants;
 
 public class SignUpPage extends JFrame {
 
@@ -53,40 +56,36 @@ public class SignUpPage extends JFrame {
 	public SignUpPage() {
 		setTitle("Sign Up an Account");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 294, 529);
+		setBounds(100, 100, 361, 652);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Sign Up an Account");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setBounds(85, 25, 125, 37);
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Name");
-		lblNewLabel_1.setBounds(56, 87, 45, 13);
-		contentPane.add(lblNewLabel_1);
-		
 		txtName = new JTextField();
-		txtName.setBounds(53, 118, 184, 31);
+		txtName.setBounds(82, 211, 172, 31);
+		txtName.setOpaque(false);
+		txtName.setBorder(null);
+		txtName.setBackground(new Color(0, 0, 0, 0));
 		contentPane.add(txtName);
 		txtName.setColumns(10);
 		
-		JLabel lblNewLabel_2 = new JLabel("Password");
-		lblNewLabel_2.setBounds(56, 256, 85, 13);
-		contentPane.add(lblNewLabel_2);
-		
-		JLabel lblNewLabel_3 = new JLabel("E-mail");
-		lblNewLabel_3.setBounds(56, 180, 45, 13);
-		contentPane.add(lblNewLabel_3);
-		
 		txtEmail = new JTextField();
 		txtEmail.setColumns(10);
-		txtEmail.setBounds(56, 203, 184, 31);
+		txtEmail.setBounds(82, 282, 172, 31);
+		txtEmail.setOpaque(false);
+		txtEmail.setBorder(null);
+		txtEmail.setBackground(new Color(0, 0, 0, 0));
 		contentPane.add(txtEmail);
 		
 		JButton btnSignUp = new JButton("Sign Up");
+		btnSignUp.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnSignUp.setForeground(new Color(255, 255, 255));
+		btnSignUp.setIcon(null);
+		btnSignUp.setOpaque(false);
+		btnSignUp.setContentAreaFilled(false);
+		btnSignUp.setBorderPainted(false);
+		btnSignUp.setFocusPainted(false);
 		btnSignUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -107,7 +106,7 @@ public class SignUpPage extends JFrame {
 						if(!EmailValidator.isEmailExists(userEmail) && EmailValidator.isValidateEmail(userEmail)) {
 							stmt.setString(2, user.getUserEmail());
 						}else {
-							JOptionPane.showMessageDialog(null, "Email Already Exist or Invalid Email dected");
+							JOptionPane.showMessageDialog(null, "Email Already Exist or Invalid Email");
 //							throw new Error("Email Already Exist or Invalid Email);
 							return;
 						}
@@ -127,12 +126,16 @@ public class SignUpPage extends JFrame {
 				}
 			}
 		});
-		btnSignUp.setBounds(108, 332, 85, 21);
+		btnSignUp.setBounds(123, 400, 76, 28);
 		contentPane.add(btnSignUp);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(53, 279, 184, 31);
+		passwordField.setBounds(82, 338, 172, 31);
+		passwordField.setOpaque(false);
+		passwordField.setBorder(null);
+		passwordField.setBackground(new Color(0, 0, 0, 0));
 		contentPane.add(passwordField);
+		setResizable(false);
 		
 		JLabel lblSwitchToLogin = new JLabel("Already registered?");
 		lblSwitchToLogin.setForeground(new Color(128, 64, 0));
@@ -145,13 +148,19 @@ public class SignUpPage extends JFrame {
 				setVisible(false);
 			}
 		});
-		lblSwitchToLogin.setBounds(85, 366, 125, 28);
+		lblSwitchToLogin.setBounds(113, 438, 125, 28);
 		contentPane.add(lblSwitchToLogin);
 		
 		JLabel lblNewLabel_4 = new JLabel("");
-		lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\USER\\eclipse-workspace\\FlappyBird\\src\\background-day.png"));
-		lblNewLabel_4.setBounds(0, 0, 280, 492);
+		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_4.setIcon(new ImageIcon(getClass().getResource("/assets/signupmenuok.png")));
+		lblNewLabel_4.setBounds(10, 10, 310, 521);
 		contentPane.add(lblNewLabel_4);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/assets/background-menu.png")));
+		lblNewLabel.setBounds(0, 10, 350, 600);
+		contentPane.add(lblNewLabel);
 
 	}
 }
