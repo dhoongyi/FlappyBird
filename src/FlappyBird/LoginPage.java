@@ -51,36 +51,39 @@ public class LoginPage extends JFrame {
 	public LoginPage() {
 		setTitle("Login Page");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 298, 546);
+		setBounds(100, 100, 364, 649);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Login To Flappy Bird",SwingConstants.CENTER);
-		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setBounds(64, 32, 157, 29);
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Email");
-		lblNewLabel_1.setBounds(45, 86, 66, 13);
-		contentPane.add(lblNewLabel_1);
-		
 		txtEmail = new JTextField();
-		txtEmail.setBounds(45, 108, 190, 32);
+		txtEmail.setForeground(new Color(64, 0, 0));
+		txtEmail.setFont(new Font("Tahoma", Font.BOLD, 12));
+//		txtEmail.setBackground(new Color(0, 0, 0 ,0));
+		txtEmail.setOpaque(false);
+		txtEmail.setBackground(new Color(0, 0, 0, 0));
+		txtEmail.setBorder(null);
+		txtEmail.setBounds(92, 229, 173, 32);
 		contentPane.add(txtEmail);
 		txtEmail.setColumns(10);
 		
-		JLabel lblNewLabel_2 = new JLabel("Password");
-		lblNewLabel_2.setBounds(45, 171, 131, 13);
-		contentPane.add(lblNewLabel_2);
-		
 		txtPassword = new JPasswordField();
-		txtPassword.setBounds(45, 194, 190, 32);
+		txtPassword.setForeground(new Color(64, 0, 0));
+		txtPassword.setFont(new Font("Tahoma", Font.BOLD, 12));
+		txtPassword.setBounds(92, 299, 173, 32);
+		txtPassword.setOpaque(false);
+		txtPassword.setBorder(null);
+		txtPassword.setBackground(new Color(0, 0, 0, 0));
 		contentPane.add(txtPassword);
 		
 		JButton btnNewButton = new JButton("Log in");
+		btnNewButton.setForeground(new Color(255, 255, 255));
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnNewButton.setOpaque(false);
+		btnNewButton.setContentAreaFilled(false);
+		btnNewButton.setBorderPainted(false);
+		btnNewButton.setFocusPainted(false);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String userEmail = txtEmail.getText().trim();
@@ -101,7 +104,7 @@ public class LoginPage extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(150, 260, 85, 21);
+		btnNewButton.setBounds(126, 420, 92, 29);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblNewLabel_3 = new JLabel("You don't have an account?");
@@ -113,13 +116,19 @@ public class LoginPage extends JFrame {
 				setVisible(false);
 			}
 		});
-		lblNewLabel_3.setBounds(45, 237, 190, 13);
+		lblNewLabel_3.setBounds(92, 367, 190, 13);
 		contentPane.add(lblNewLabel_3);
 		
-		JLabel lblNewLabel_4 = new JLabel("");
-		lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\USER\\eclipse-workspace\\FlappyBird\\src\\background-day.png"));
-		lblNewLabel_4.setBounds(0, 10, 284, 499);
-		contentPane.add(lblNewLabel_4);
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/assets/loginmenuok.png")));
+		lblNewLabel.setBounds(10, 76, 330, 417);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon(getClass().getResource("/assets/background-menu.png")));
+		lblNewLabel_1.setBounds(0, 0, 350, 602);
+		contentPane.add(lblNewLabel_1);
 
 	}
 
