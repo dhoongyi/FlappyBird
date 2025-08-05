@@ -35,15 +35,12 @@ public class FlappyPlay extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 600);
-//		contentPane = new JPanel();
-//		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-//		setContentPane(contentPane);
 		
-//		GameControl ctl = new GameControl(mode,this);
-//		setContentPane(ctl);
-//		pack();
-//		setLocationRelativeTo(null);
-//		ctl.requestFocus();
+		GameControl ctl = new GameControl(mode,this);
+		setContentPane(ctl);
+		pack();
+		setLocationRelativeTo(null);
+		ctl.requestFocus();
 
 	}
 

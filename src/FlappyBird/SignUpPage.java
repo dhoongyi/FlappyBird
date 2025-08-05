@@ -79,7 +79,8 @@ public class SignUpPage extends JFrame {
 		contentPane.add(txtEmail);
 		
 		JButton btnSignUp = new JButton("Sign Up");
-		btnSignUp.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnSignUp.setVerticalAlignment(SwingConstants.TOP);
+		btnSignUp.setFont(new Font("Concert One", Font.BOLD, 12));
 		btnSignUp.setForeground(new Color(255, 255, 255));
 		btnSignUp.setIcon(null);
 		btnSignUp.setOpaque(false);

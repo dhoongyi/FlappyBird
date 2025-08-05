@@ -75,6 +75,13 @@ public class MainMenu extends JFrame {
 		contentPane.add(btnPlay);
 		
 		JButton btnLeaderboard = new JButton("");
+		btnLeaderboard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LeaderBoard leaderBoard = new LeaderBoard();
+				leaderBoard.setVisible(true);
+				setVisible(false);
+			}
+		});
 //		btnLeaderboard.setIcon(new ImageIcon("/home/rango/eclipse-workspace/FB/src/assets/leaderboard.png"));
 		btnLeaderboard.setIcon(new ImageIcon(getClass().getResource("/assets/leaderboard.png")));
 		btnLeaderboard.setBackground(new Color(0, 0, 0));

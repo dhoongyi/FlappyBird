@@ -77,14 +77,15 @@ public class LoginPage extends JFrame {
 		txtPassword.setBackground(new Color(0, 0, 0, 0));
 		contentPane.add(txtPassword);
 		
-		JButton btnNewButton = new JButton("Log in");
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnNewButton.setOpaque(false);
-		btnNewButton.setContentAreaFilled(false);
-		btnNewButton.setBorderPainted(false);
-		btnNewButton.setFocusPainted(false);
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnLogin = new JButton("Log in");
+		btnLogin.setVerticalAlignment(SwingConstants.TOP);
+		btnLogin.setForeground(new Color(255, 255, 255));
+		btnLogin.setFont(new Font("Concert One", Font.BOLD, 15));
+		btnLogin.setOpaque(false);
+		btnLogin.setContentAreaFilled(false);
+		btnLogin.setBorderPainted(false);
+		btnLogin.setFocusPainted(false);
+		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String userEmail = txtEmail.getText().trim();
 				String userPassword = new String(txtPassword.getText());
@@ -95,6 +96,9 @@ public class LoginPage extends JFrame {
 					LoggedUserInfo.getInstance().setUserName(AuthService.getUserName(userEmail));
 					
 					JOptionPane.showMessageDialog(null, "Login successfully");
+					MainMenu main = new MainMenu();
+					main.setVisible(true);
+					setVisible(false);
 					System.out.println("Login Successfully");
 					
 				}else {
@@ -104,8 +108,8 @@ public class LoginPage extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(126, 420, 92, 29);
-		contentPane.add(btnNewButton);
+		btnLogin.setBounds(132, 420, 86, 29);
+		contentPane.add(btnLogin);
 		
 		JLabel lblNewLabel_3 = new JLabel("You don't have an account?");
 		lblNewLabel_3.addMouseListener(new MouseAdapter() {
