@@ -78,6 +78,13 @@ public class LoginPage extends JFrame {
 		contentPane.add(txtPassword);
 		
 		JButton btnNewButton = new JButton("Log in");
+		try {
+		    Font customFont = Font.createFont(Font.TRUETYPE_FONT,
+		        getClass().getResourceAsStream("/fonts/ConcertOne-Regular.ttf")).deriveFont(18f);
+		    btnNewButton.setFont(customFont);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
 		btnNewButton.setForeground(new Color(255, 255, 255));
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnNewButton.setOpaque(false);
@@ -95,6 +102,9 @@ public class LoginPage extends JFrame {
 					LoggedUserInfo.getInstance().setUserName(AuthService.getUserName(userEmail));
 					
 					JOptionPane.showMessageDialog(null, "Login successfully");
+					MainMenu main = new MainMenu();
+					main.setVisible(true);
+					setVisible(false);
 					System.out.println("Login Successfully");
 					
 				}else {
@@ -104,7 +114,7 @@ public class LoginPage extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(126, 420, 92, 29);
+		btnNewButton.setBounds(132, 420, 86, 29);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblNewLabel_3 = new JLabel("You don't have an account?");
