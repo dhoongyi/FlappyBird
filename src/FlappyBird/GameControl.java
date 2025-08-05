@@ -12,6 +12,10 @@ import java.awt.event.KeyListener;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class GameControl extends JPanel implements ActionListener,KeyListener  {
@@ -53,6 +57,7 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 	boolean gameOver = false;
 	double score = 0;
 	String mode;
+	int currentPlayerId = LoggedUserInfo.getInstance().getUserId();
 
 	/**
 	 * Create the panel.
@@ -119,7 +124,7 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 
         Pipe bottomPipe = new Pipe(bottomPipeImg, boardWidth, randomY + pipeHeight + openingSpace);
         pipes.add(bottomPipe);
-		
+        
     }
 
     @Override
@@ -182,6 +187,7 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 
             if (collision(bird, pipe)) {
                 gameOver = true;
+                saveScore((int)score);
                 GameOver gameover = new GameOver((int)score);
                 gameover.setVisible(true);
 				setVisible(false);
@@ -191,10 +197,49 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 
         if (bird.y > boardHeight - bird.height || bird.y < 0) {
             gameOver = true;
+            saveScore((int)score);
             GameOver gameover = new GameOver((int)score);
             gameover.setVisible(true);
 			setVisible(false);
 			parentJFrame.dispose();
+        }
+    }
+
+    
+    public void saveScore(int score) {
+        String selectQuery = "SELECT * FROM scores WHERE user_id = ?";
+        String insertQuery = "INSERT INTO scores (user_id, score) VALUES (?, ?)";
+        String updateQuery = "UPDATE scores SET score = ? WHERE user_id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement selectStmt = conn.prepareStatement(selectQuery)) {
+
+            selectStmt.setInt(1, currentPlayerId);
+            ResultSet rs = selectStmt.executeQuery();
+
+            if (rs.next()) {
+                // Score already exists, so update it
+                int existingScore = rs.getInt("score");
+                if (score > existingScore) {
+                    try (PreparedStatement updateStmt = conn.prepareStatement(updateQuery)) {
+                        updateStmt.setInt(1, score);
+                        updateStmt.setInt(2, currentPlayerId);
+                        updateStmt.executeUpdate();
+                    }
+                }else{
+                    System.out.println("New score is not higher. No update performed.");
+                }
+            } else {
+                // Score doesn't exist, so insert a new record
+                try (PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
+                    insertStmt.setInt(1, currentPlayerId);
+                    insertStmt.setInt(2, score);
+                    insertStmt.executeUpdate();
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -229,45 +274,43 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
     public void keyTyped(KeyEvent e) {
         // 
     }
-    
-    
-    
-    
-    
-    
-    
+     
     
   // bird class
+    
     class Bird{
-    	int x = birdX;
-    	int y = birdY;
-    	int width = birdWidth;
-    	int height = birdHeight;
-    	Image img;
+		int x = birdX;
+		int y = birdY;
+		int width = birdWidth;
+		int height = birdHeight;
+		Image img;
+		
+		Bird(Image img){
+			this.img = img;
+		}
+	}
 
-    	Bird(Image img){
-    	this.img = img;
-    	}
-    }
-    
-    
-    
- // pipe class
+    // pipe class
     class Pipe {
-    	int x;
-    	int y;
-    	int width = 64;
-    	int height = 512;
-    	Image img;
-    	boolean passed = false;
+		int x;
+		int y;
+		int width = 64;
+		int height = 512;
+		Image img;
+		boolean passed = false;
 
-    	Pipe(Image img, int x, int y) {
-    	this.img = img;
-    	this.x = x;
-    	this.y = y;
-    	}
-    }
+		Pipe(Image img, int x, int y) {
+			this.img = img;
+			this.x = x;
+			this.y = y;
+		}
+	}
     
+    
+    
+
+	
+
 }
 
 

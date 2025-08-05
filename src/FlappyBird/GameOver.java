@@ -11,6 +11,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
@@ -61,14 +65,15 @@ public class GameOver extends JFrame {
 		scoreLabel.setFont(new Font("Tiny5", Font.BOLD, 20)); 
 		contentPane.add(scoreLabel);
 		
-		String username = AuthService.getUserName(LoggedUserInfo.getInstance().getUserEmail());	 // get username in here
+		String username = LoggedUserInfo.getInstance().getUserName();	 // get username in here
 		JLabel usernameLabel = new JLabel("" +username);
-		usernameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		usernameLabel.setBounds(73, 265, 51, 32); 
+		usernameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		usernameLabel.setBounds(73, 265, 100, 32); 
 		usernameLabel.setFont(new Font("Tiny5", Font.BOLD, 20)); 
 		contentPane.add(usernameLabel);
 		
-		String bestscore = null;	 // get bestscore in here
+		
+		int bestscore = getScoreForCurrentPlayer(LoggedUserInfo.getInstance().getUserId());	 // get bestscore in here
 		JLabel bestscoreLabel = new JLabel("" +bestscore);
 		bestscoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		bestscoreLabel.setBounds(223, 295, 64, 32); 
@@ -77,6 +82,13 @@ public class GameOver extends JFrame {
 				
 				
 		JButton button = new JButton("");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LeaderBoard leaderBoard = new LeaderBoard();
+				leaderBoard.setVisible(true);
+				setVisible(false);
+			}
+		});
 		button.setIcon(new ImageIcon(getClass().getResource("/assets/leaderboard.png")));
 		button.setBounds(202, 384, 116, 44);
 		contentPane.add(button);
@@ -105,5 +117,28 @@ public class GameOver extends JFrame {
 		bgmenu.setBounds(0, -75, 350, 675);
 		contentPane.add(bgmenu);
 
+	}
+	
+	public int getScoreForCurrentPlayer(int currentPlayerId) {
+	    String selectQuery = "SELECT score FROM scores WHERE user_id = ?";
+	    int playerScore = 0;  
+
+	    try (Connection conn = DBConnection.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(selectQuery)) {
+
+	        stmt.setInt(1, currentPlayerId);
+	        ResultSet rs = stmt.executeQuery();
+
+	        if (rs.next()) {
+	            playerScore = rs.getInt("score");
+	        } else {
+	            System.out.println("No score found for player with ID: " + currentPlayerId);
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return playerScore;
 	}
 }

@@ -77,21 +77,15 @@ public class LoginPage extends JFrame {
 		txtPassword.setBackground(new Color(0, 0, 0, 0));
 		contentPane.add(txtPassword);
 		
-		JButton btnNewButton = new JButton("Log in");
-		try {
-		    Font customFont = Font.createFont(Font.TRUETYPE_FONT,
-		        getClass().getResourceAsStream("/fonts/ConcertOne-Regular.ttf")).deriveFont(18f);
-		    btnNewButton.setFont(customFont);
-		} catch (Exception e) {
-		    e.printStackTrace();
-		}
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnNewButton.setOpaque(false);
-		btnNewButton.setContentAreaFilled(false);
-		btnNewButton.setBorderPainted(false);
-		btnNewButton.setFocusPainted(false);
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnLogin = new JButton("Log in");
+		btnLogin.setVerticalAlignment(SwingConstants.TOP);
+		btnLogin.setForeground(new Color(255, 255, 255));
+		btnLogin.setFont(new Font("Concert One", Font.BOLD, 15));
+		btnLogin.setOpaque(false);
+		btnLogin.setContentAreaFilled(false);
+		btnLogin.setBorderPainted(false);
+		btnLogin.setFocusPainted(false);
+		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String userEmail = txtEmail.getText().trim();
 				String userPassword = new String(txtPassword.getText());
@@ -114,8 +108,8 @@ public class LoginPage extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(132, 420, 86, 29);
-		contentPane.add(btnNewButton);
+		btnLogin.setBounds(132, 420, 86, 29);
+		contentPane.add(btnLogin);
 		
 		JLabel lblNewLabel_3 = new JLabel("You don't have an account?");
 		lblNewLabel_3.addMouseListener(new MouseAdapter() {
