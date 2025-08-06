@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,6 +27,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class SignUpPage extends JFrame {
 
@@ -63,6 +67,16 @@ public class SignUpPage extends JFrame {
 		contentPane.setLayout(null);
 		
 		txtName = new JTextField();
+		txtName.setForeground(new Color(64, 0, 0));
+		txtName.setFont(new Font("Concert One", Font.PLAIN, 13));
+		txtName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if(txtName.getText().length() > 13) {
+					e.consume();
+				}
+			}
+		});
 		txtName.setBounds(82, 211, 172, 31);
 		txtName.setOpaque(false);
 		txtName.setBorder(null);
@@ -71,6 +85,8 @@ public class SignUpPage extends JFrame {
 		txtName.setColumns(10);
 		
 		txtEmail = new JTextField();
+		txtEmail.setForeground(new Color(64, 0, 0));
+		txtEmail.setFont(new Font("Concert One", Font.PLAIN, 13));
 		txtEmail.setColumns(10);
 		txtEmail.setBounds(82, 282, 172, 31);
 		txtEmail.setOpaque(false);
@@ -80,7 +96,7 @@ public class SignUpPage extends JFrame {
 		
 		JButton btnSignUp = new JButton("Sign Up");
 		btnSignUp.setVerticalAlignment(SwingConstants.TOP);
-		btnSignUp.setFont(new Font("Concert One", Font.BOLD, 12));
+		btnSignUp.setFont(new Font("Concert One", Font.PLAIN, 12));
 		btnSignUp.setForeground(new Color(255, 255, 255));
 		btnSignUp.setIcon(null);
 		btnSignUp.setOpaque(false);
@@ -92,9 +108,11 @@ public class SignUpPage extends JFrame {
 				
 				String userName = txtName.getText().trim();
 				String userEmail = txtEmail.getText().trim();
-				String userPassword = new String(passwordField.getText());
+				String userPassword = new String(passwordField.getPassword());
 				
-				User user = new User(userName,userEmail,userPassword);
+				String hashPassword = BCrypt.hashpw(userPassword,BCrypt.gensalt());
+				
+				User user = new User(userName,userEmail,hashPassword);
 				
 				String insertSQL = "INSERT INTO users(user_name, email, password)"
 						+ "	VALUES(?,?,?)";
@@ -131,6 +149,8 @@ public class SignUpPage extends JFrame {
 		contentPane.add(btnSignUp);
 		
 		passwordField = new JPasswordField();
+		passwordField.setForeground(new Color(64, 0, 0));
+		passwordField.setFont(new Font("Concert One", Font.PLAIN, 13));
 		passwordField.setBounds(82, 338, 172, 31);
 		passwordField.setOpaque(false);
 		passwordField.setBorder(null);

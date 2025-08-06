@@ -69,7 +69,7 @@ public class GameOver extends JFrame {
 		JLabel usernameLabel = new JLabel("" +username);
 		usernameLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		usernameLabel.setBounds(73, 265, 100, 32); 
-		usernameLabel.setFont(new Font("Tiny5", Font.BOLD, 20)); 
+		usernameLabel.setFont(new Font("Tiny5", Font.BOLD, 13)); 
 		contentPane.add(usernameLabel);
 		
 		

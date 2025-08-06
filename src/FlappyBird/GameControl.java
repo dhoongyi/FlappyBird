@@ -41,6 +41,7 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 	int pipeY = 0;
 	int pipeWidth = 62;
 	int pipeHeight = 512;
+	int pipecount = 0;
 
 	Bird bird;
 	int velocityY = 0;
@@ -57,13 +58,18 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 	boolean gameOver = false;
 	double score = 0;
 	String mode;
+	String startMode;
 	int currentPlayerId = LoggedUserInfo.getInstance().getUserId();
+	
+	String modeChangeMessage = "";
+	long modeChangeMessageTime;
 
 	/**
 	 * Create the panel.
 	 */
 	public GameControl(String mode,JFrame parentJFrame) {
 
+		startMode = mode;
 		this.mode = mode;
 		this.parentJFrame = parentJFrame;
 		setPreferredSize(new Dimension(boardWidth, boardHeight));
@@ -137,12 +143,7 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
             g.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height, null);
         }
 
-        // normal font
-//        g.setColor(Color.white);
-//        g.setFont(new Font("Micro5", Font.BOLD, 50));
-//        if (!gameOver) {
-//            g.drawString(String.valueOf((int) score), 170, 70);
-//        }
+
         
         // This is score styling font with stroke
         Graphics2D g2 = (Graphics2D) g;
@@ -162,7 +163,7 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
         g2.translate(0, 0);
 
         if (!gameOver) {
-            // Draw outline
+            
             g2.setColor(Color.BLACK);
             g2.setStroke(new BasicStroke(8));
             g2.draw(shape);
@@ -171,6 +172,20 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
             g2.setColor(Color.WHITE);
             g2.fill(shape);
         }
+        
+        
+        // Mode Change Message
+        if(!modeChangeMessage.isEmpty()) {
+        	long currentTime = System.currentTimeMillis();
+        	if(currentTime - modeChangeMessageTime < 2000) {
+                g2.setFont(new Font("Tiny5", Font.BOLD, 20));
+                g2.setColor(Color.YELLOW);
+                g2.drawString(modeChangeMessage, 60, 100);
+        	}
+        }else {
+        	modeChangeMessage = "";
+        }
+        
     }
 
     public void move() {
@@ -181,9 +196,40 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
             pipe.x -= pipeSpeed;
 
             if (!pipe.passed && bird.x > pipe.x + pipe.width) {
-                score += 0.5;
+            	
                 pipe.passed = true;
+                
+                if(pipes.indexOf(pipe) % 2 == 0) {
+                	
+                	switch(mode.toLowerCase()) {
+	                	case "easy":
+	                		pipecount+=1;
+	                		score+=1;
+	                		break;
+	                	case "normal":
+	                		pipecount+=2;
+	                		score+=2;
+	                		break;
+	                	case "hard":
+	                		pipecount+=3;
+	                		score+=3;
+	                		break;
+                	}
+                	
+                	if(pipecount == 10 && startMode.equalsIgnoreCase("easy") && mode.equalsIgnoreCase("easy")) {
+                		changeMode("normal");
+                	}else if(pipecount == 20 && startMode.equalsIgnoreCase("easy") && mode.equalsIgnoreCase("normal")) {
+                		changeMode("hard");
+                	}else if(pipecount == 10 && startMode.equalsIgnoreCase("normal") && mode.equalsIgnoreCase("normal")) {
+                		changeMode("hard");
+                	}
+                	
+                }
+                
+                
             }
+            
+            
 
             if (collision(bird, pipe)) {
                 gameOver = true;
@@ -204,7 +250,40 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 			parentJFrame.dispose();
         }
     }
-
+    
+    public void changeMode(String mode) {
+    	this.mode = mode;
+    	
+    	switch (mode.toLowerCase()) {
+			case "easy":
+				pipeSpacing = 200;
+				pipeSpeed = 4;
+				 pipeInterval = 3000;
+				break;
+			case "normal":
+				pipeSpacing = 150;
+				pipeSpeed = 6;
+				 pipeInterval = 2000;
+				break;
+			case "hard":
+				pipeSpacing = 100;
+				pipeSpeed = 8;
+				 pipeInterval = 1300;
+				break;
+			default:
+				pipeSpacing = 150;
+				pipeSpeed = 6;
+				pipeInterval = 2000;
+		}
+    	
+    	placePipeTimer.setDelay(pipeInterval);
+    	
+    	modeChangeMessage = "Mode Change to " + mode.toUpperCase();
+    	modeChangeMessageTime = System.currentTimeMillis();
+    	
+    }
+    
+    
     
     public void saveScore(int score) {
         String selectQuery = "SELECT * FROM scores WHERE user_id = ?";
@@ -274,7 +353,13 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
     public void keyTyped(KeyEvent e) {
         // 
     }
-     
+    
+    
+    
+    
+    
+    
+    
     
   // bird class
     
@@ -306,10 +391,7 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 		}
 	}
     
-    
-    
 
-	
 
 }
 
