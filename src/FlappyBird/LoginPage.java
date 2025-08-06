@@ -59,18 +59,18 @@ public class LoginPage extends JFrame {
 		
 		txtEmail = new JTextField();
 		txtEmail.setForeground(new Color(64, 0, 0));
-		txtEmail.setFont(new Font("Tahoma", Font.BOLD, 12));
+		txtEmail.setFont(new Font("Concert One", Font.PLAIN, 13));
 //		txtEmail.setBackground(new Color(0, 0, 0 ,0));
 		txtEmail.setOpaque(false);
 		txtEmail.setBackground(new Color(0, 0, 0, 0));
 		txtEmail.setBorder(null);
-		txtEmail.setBounds(92, 229, 173, 32);
+		txtEmail.setBounds(92, 226, 173, 32);
 		contentPane.add(txtEmail);
 		txtEmail.setColumns(10);
 		
 		txtPassword = new JPasswordField();
 		txtPassword.setForeground(new Color(64, 0, 0));
-		txtPassword.setFont(new Font("Tahoma", Font.BOLD, 12));
+		txtPassword.setFont(new Font("Concert One", Font.PLAIN, 13));
 		txtPassword.setBounds(92, 299, 173, 32);
 		txtPassword.setOpaque(false);
 		txtPassword.setBorder(null);
@@ -88,7 +88,7 @@ public class LoginPage extends JFrame {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String userEmail = txtEmail.getText().trim();
-				String userPassword = new String(txtPassword.getText());
+				String userPassword = new String(txtPassword.getPassword());
 				
 				if(AuthService.isLogin(userEmail, userPassword) && EmailValidator.isEmailExists(userEmail) && EmailValidator.isValidateEmail(userEmail)) {
 					LoggedUserInfo.getInstance().setUserEmail(userEmail);
