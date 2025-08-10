@@ -18,7 +18,7 @@ public class FlappyPlay extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FlappyPlay frame = new FlappyPlay("easy");
+					FlappyPlay frame = new FlappyPlay("easy", "flappybird" , "background-menu");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -30,13 +30,13 @@ public class FlappyPlay extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FlappyPlay(String mode) {
+	public FlappyPlay(String mode, String selectedBird , String selectedThemeImg) {
 		setTitle("Flappy Bird");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 600);
 		
-		GameControl ctl = new GameControl(mode,this);
+		GameControl ctl = new GameControl(mode, selectedBird , selectedThemeImg,this);
 		setContentPane(ctl);
 		pack();
 		setLocationRelativeTo(null);
