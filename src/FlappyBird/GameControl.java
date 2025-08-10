@@ -67,7 +67,7 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 	/**
 	 * Create the panel.
 	 */
-	public GameControl(String mode,JFrame parentJFrame) {
+	public GameControl(String mode, String selectedBird, String selectedThemeImg,JFrame parentJFrame) {
 
 		startMode = mode;
 		this.mode = mode;
@@ -77,8 +77,8 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 		requestFocusInWindow();
 		addKeyListener(this);
 
-		backgroundImg = new ImageIcon(getClass().getResource("/assets/background-menu.png")).getImage();
-		birdImg = new ImageIcon(getClass().getResource("/assets/flappybird.png")).getImage();
+		backgroundImg = new ImageIcon(getClass().getResource("/assets/"+selectedThemeImg+".png")).getImage();
+		birdImg = new ImageIcon(getClass().getResource("/assets/"+selectedBird+".png")).getImage();
 		topPipeImg = new ImageIcon(getClass().getResource("/assets/toppipe.png")).getImage();
 		bottomPipeImg = new ImageIcon(getClass().getResource("/assets/bottompipe.png")).getImage();
 
