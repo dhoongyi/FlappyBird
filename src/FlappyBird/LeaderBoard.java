@@ -61,14 +61,14 @@ public class LeaderBoard extends JFrame {
 		
 		for (int i = 0; i < playerNames.size(); i++) {
 			JLabel lblSerialNumber = new JLabel(String.valueOf(i + 1));
-			lblSerialNumber.setBounds(98, contentY, 17, 13);
+			lblSerialNumber.setBounds(78, contentY, 17, 13);
 			contentPane.add(lblSerialNumber);
 			lblSerialNumber.setFont(new Font("Tahoma", Font.BOLD, 12));
 			lblSerialNumber.setForeground(new Color(128, 64, 0));
 			lblSerialNumber.setHorizontalAlignment(SwingConstants.CENTER);
 
 			JLabel lblStar = new JLabel("");
-			lblStar.setBounds(95, starY, 22, 28);
+			lblStar.setBounds(75, starY, 22, 28);
 			contentPane.add(lblStar);
 			lblStar.setIcon(new ImageIcon(getClass().getResource("/assets/star.png")));
 
@@ -76,7 +76,7 @@ public class LeaderBoard extends JFrame {
 			lblPlayerName.setHorizontalAlignment(SwingConstants.LEFT);
 			lblPlayerName.setForeground(new Color(128, 64, 0));
 			lblPlayerName.setFont(new Font("Tahoma", Font.BOLD, 12));
-			lblPlayerName.setBounds(130, contentY, 82, 13);
+			lblPlayerName.setBounds(110, contentY, 102, 13);
 			contentPane.add(lblPlayerName);
 
 			JLabel lblScore = new JLabel(String.valueOf(scores.get(i)));
