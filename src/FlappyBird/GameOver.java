@@ -96,7 +96,7 @@ public class GameOver extends JFrame {
 		JButton button_1 = new JButton("");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ChooseGameMode chgamemode = new ChooseGameMode();
+				ChooseGameTheme chgamemode = new ChooseGameTheme();
 				chgamemode.setVisible(true);
 				setVisible(false);
 			}

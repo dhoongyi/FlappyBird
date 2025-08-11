@@ -99,7 +99,7 @@ public class LeaderBoard extends JFrame {
 		JButton btnRestart = new JButton("");
 		btnRestart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ChooseGameMode chgamemode = new ChooseGameMode();
+				ChooseGameTheme chgamemode = new ChooseGameTheme();
 				chgamemode.setVisible(true);
 				setVisible(false);
 			}

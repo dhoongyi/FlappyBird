@@ -64,8 +64,8 @@ public class MainMenu extends JFrame {
 		btnPlay.setBackground(new Color(34, 114, 255));
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ChooseGameMode chgamemode = new ChooseGameMode();
-				chgamemode.setVisible(true);
+				ChooseGameTheme gameTheme = new ChooseGameTheme();
+				gameTheme.setVisible(true);
 				setVisible(false);
 			}
 		});
