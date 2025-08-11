@@ -98,8 +98,9 @@ public class ChooseGameTheme extends JFrame {
         lblSelectMode.setBounds(10, 152, 316, 32);
         contentPane.add(lblSelectMode);
 
-        JLabel lblDayMode = new JLabel("Day Mode");
-        lblDayMode.setBounds(84, 268, 73, 13);
+        JLabel lblDayMode = new JLabel("");
+        lblDayMode.setIcon(new ImageIcon(getClass().getResource("/assets/icon1.png")));
+        lblDayMode.setBounds(34, 218, 34, 32);
         lblDayMode.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -109,8 +110,9 @@ public class ChooseGameTheme extends JFrame {
         });
         contentPane.add(lblDayMode);
         
-        JLabel lblNightMode = new JLabel("Night Mode");
-        lblNightMode.setBounds(201, 268, 86, 13);
+        JLabel lblNightMode = new JLabel("");
+        lblNightMode.setIcon(new ImageIcon(getClass().getResource("/assets/icon2.png")));
+        lblNightMode.setBounds(116, 218, 32, 32);
         lblNightMode.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -119,11 +121,6 @@ public class ChooseGameTheme extends JFrame {
             }
         });
         contentPane.add(lblNightMode);
-        
-        JLabel lblNewLabel_1 = new JLabel("");
-        lblNewLabel_1.setIcon(new ImageIcon(getClass().getResource("/assets/background-menu.png")));
-        lblNewLabel_1.setBounds(0, 0, 336, 541);
-        contentPane.add(lblNewLabel_1);
         
         JButton btnPlay = new JButton("");
 		btnPlay.setBackground(new Color(34, 114, 255));
@@ -136,8 +133,37 @@ public class ChooseGameTheme extends JFrame {
 		});
         
         btnPlay.setIcon(new ImageIcon(getClass().getResource("/assets/play.png")));
-		btnPlay.setBounds(121, 400, 117, 46);
+		btnPlay.setBounds(116, 331, 117, 46);
 		contentPane.add(btnPlay);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				selectedThemeImg = "background-desert";
+				System.out.println("Desert Mode Selected");
+			}
+		});
+		lblNewLabel_1.setIcon(new ImageIcon(getClass().getResource("/assets/icon3.png")));
+		lblNewLabel_1.setBounds(193, 218, 34, 32);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				selectedThemeImg = "background-snow";
+				System.out.println("Snow Mode Selected");
+			}
+		});
+		lblNewLabel_2.setIcon(new ImageIcon(getClass().getResource("/assets/icon4.png")));
+		lblNewLabel_2.setBounds(275, 218, 32, 32);
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setIcon(new ImageIcon(getClass().getResource("/assets/background-menu.png")));
+		lblNewLabel_3.setBounds(0, 0, 330, 535);
+		contentPane.add(lblNewLabel_3);
 		
 	}
 }

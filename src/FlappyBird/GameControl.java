@@ -28,7 +28,7 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 	int boardHeight = 600;
 
 	// load Image
-	Image backgroundImg, birdImg, topPipeImg, bottomPipeImg;
+	Image backgroundImg, birdImg, topPipeImg, bottomPipeImg, readyImg;
 
 //    Bird
 	int birdX = boardWidth / 7;
@@ -63,11 +63,13 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 	
 	String modeChangeMessage = "";
 	long modeChangeMessageTime;
+	
+	boolean started = false;
 
 	/**
 	 * Create the panel.
 	 */
-	public GameControl(String mode, String selectedBird, String selectedThemeImg,JFrame parentJFrame) {
+	public GameControl(String mode, String selectedBird, String selectedTheme,JFrame parentJFrame) {
 
 		startMode = mode;
 		this.mode = mode;
@@ -77,10 +79,11 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 		requestFocusInWindow();
 		addKeyListener(this);
 
-		backgroundImg = new ImageIcon(getClass().getResource("/assets/"+selectedThemeImg+".png")).getImage();
+		backgroundImg = new ImageIcon(getClass().getResource("/assets/"+selectedTheme+".png")).getImage();
 		birdImg = new ImageIcon(getClass().getResource("/assets/"+selectedBird+".png")).getImage();
 		topPipeImg = new ImageIcon(getClass().getResource("/assets/toppipe.png")).getImage();
 		bottomPipeImg = new ImageIcon(getClass().getResource("/assets/bottompipe.png")).getImage();
+		readyImg = new ImageIcon(getClass().getResource("/assets/getready.png")).getImage();
 
 		switch (mode.toLowerCase()) {
 			case "easy":
@@ -113,10 +116,10 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 				placePipes();
 			}
 		});		
-		placePipeTimer.start();
+//		placePipeTimer.start();
 
 		gameLoop = new Timer(40,this);
-		gameLoop.start();
+//		gameLoop.start();
 
 	}
 	
@@ -162,6 +165,7 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 
         g2.translate(0, 0);
 
+        
         if (!gameOver) {
             
             g2.setColor(Color.BLACK);
@@ -173,6 +177,13 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
             g2.fill(shape);
         }
         
+        if(!started && !gameOver) {
+        	g.drawImage(readyImg, 80, 110, 200, 300, null);
+        	
+        	g2.setFont(new Font("Tiny5", Font.BOLD, 18));
+            g2.setColor(Color.WHITE);
+            g2.drawString("Press Spacebar to Start", 80, 500);
+		}
         
         // Mode Change Message
         if(!modeChangeMessage.isEmpty()) {
@@ -198,6 +209,7 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
             if (!pipe.passed && bird.x > pipe.x + pipe.width) {
             	
                 pipe.passed = true;
+                playSound("point.wav");
                 
                 if(pipes.indexOf(pipe) % 2 == 0) {
                 	
@@ -233,6 +245,7 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 
             if (collision(bird, pipe)) {
                 gameOver = true;
+                playSound("hit.wav");
                 saveScore((int)score);
                 GameOver gameover = new GameOver((int)score);
                 gameover.setVisible(true);
@@ -243,6 +256,7 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 
         if (bird.y > boardHeight - bird.height || bird.y < 0) {
             gameOver = true;
+            playSound("die.wav");
             saveScore((int)score);
             GameOver gameover = new GameOver((int)score);
             gameover.setVisible(true);
@@ -341,7 +355,14 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+        	if (!started) {
+                started = true;
+                placePipeTimer.start();
+                gameLoop.start();
+            }
             velocityY = -9;
+            
+            playSound("wing.wav");
         }
     }
     
@@ -356,7 +377,29 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
     
     
     
-    
+    private void playSound(String soundFileName) {
+        try {
+            
+            java.net.URL soundURL = getClass().getResource("/audio/" + soundFileName);
+            if (soundURL == null) {
+                System.out.println("Sound file not found: " + soundFileName);
+                return;
+            }
+
+            javax.sound.sampled.AudioInputStream audioIn = javax.sound.sampled.AudioSystem.getAudioInputStream(soundURL);
+            javax.sound.sampled.Clip clip = javax.sound.sampled.AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+            
+            clip.addLineListener(event -> {
+                if (event.getType() == javax.sound.sampled.LineEvent.Type.STOP) {
+                    clip.close();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
     
     
@@ -394,6 +437,5 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 
 
 }
-
 
 
