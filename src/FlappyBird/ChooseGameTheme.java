@@ -123,7 +123,7 @@ public class ChooseGameTheme extends JFrame {
         contentPane.add(lblNightMode);
         
         JButton btnPlay = new JButton("");
-		btnPlay.setBackground(new Color(34, 114, 255));
+		btnPlay.setBackground(new Color(192, 192, 192));
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ChooseGameMode gameMode = new ChooseGameMode(selectedBird, selectedThemeImg);
@@ -132,8 +132,8 @@ public class ChooseGameTheme extends JFrame {
 			}
 		});
         
-        btnPlay.setIcon(new ImageIcon(getClass().getResource("/assets/play.png")));
-		btnPlay.setBounds(116, 331, 117, 46);
+        btnPlay.setIcon(new ImageIcon(getClass().getResource("/assets/next.png")));
+		btnPlay.setBounds(116, 331, 113, 39);
 		contentPane.add(btnPlay);
 		
 		JLabel lblNewLabel_1 = new JLabel("");

@@ -140,10 +140,10 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(backgroundImg, 0, 0, boardWidth, boardHeight, null);
-        g.drawImage(bird.img, bird.x, bird.y, bird.width, bird.height, null);
+        g.drawImage(bird.getImg(), bird.getX(), bird.getY(), bird.getWidth(), bird.getHeight(), null);
 
         for (Pipe pipe : pipes) {
-            g.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height, null);
+            g.drawImage(pipe.getImg(), pipe.getX(), pipe.getY(), pipe.getWidth(), pipe.getHeight(), null);
         }
 
 
@@ -204,9 +204,10 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
         bird.y += velocityY;
 
         for (Pipe pipe : pipes) {
-            pipe.x -= pipeSpeed;
+//            pipe.x -= pipeSpeed;
+            pipe.setX(pipe.getX()-pipeSpeed);
 
-            if (!pipe.passed && bird.x > pipe.x + pipe.width) {
+            if (!pipe.isPassed() && bird.getX() > pipe.getX() + pipe.getWidth()) {
             	
                 pipe.passed = true;
                 playSound("point.wav");
@@ -254,7 +255,7 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
             }
         }
 
-        if (bird.y > boardHeight - bird.height || bird.y < 0) {
+        if (bird.getY() > boardHeight - bird.getHeight() || bird.getY() < 0) {
             gameOver = true;
             playSound("die.wav");
             saveScore((int)score);
@@ -269,11 +270,6 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
     	this.mode = mode;
     	
     	switch (mode.toLowerCase()) {
-			case "easy":
-				pipeSpacing = 200;
-				pipeSpeed = 4;
-				 pipeInterval = 3000;
-				break;
 			case "normal":
 				pipeSpacing = 150;
 				pipeSpeed = 6;
@@ -337,8 +333,8 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
     }
 
     boolean collision(Bird b, Pipe p) {
-        return b.x < p.x + p.width && b.x + b.width > p.x &&
-               b.y < p.y + p.height && b.y + b.height > p.y;
+        return b.getX() < p.getX() + p.getWidth() && b.getX() + b.getWidth() > p.getX() &&
+               b.getY() < p.getY() + p.getHeight() && b.getY() + b.getHeight() > p.getY();
     }
 
     @Override
@@ -407,11 +403,52 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
   // bird class
     
     class Bird{
-		int x = birdX;
-		int y = birdY;
-		int width = birdWidth;
-		int height = birdHeight;
-		Image img;
+		private int x = birdX;
+		private int y = birdY;
+		private int width = birdWidth;
+		private int height = birdHeight;
+		private Image img;
+		public int getX() {
+			return x;
+		}
+
+		public void setX(int x) {
+			this.x = x;
+		}
+
+		public int getY() {
+			return y;
+		}
+
+		public void setY(int y) {
+			this.y = y;
+		}
+
+		public int getWidth() {
+			return width;
+		}
+
+		public void setWidth(int width) {
+			this.width = width;
+		}
+
+		public int getHeight() {
+			return height;
+		}
+
+		public void setHeight(int height) {
+			this.height = height;
+		}
+
+		public Image getImg() {
+			return img;
+		}
+
+		public void setImg(Image img) {
+			this.img = img;
+		}
+
+		
 		
 		Bird(Image img){
 			this.img = img;
@@ -420,12 +457,61 @@ public class GameControl extends JPanel implements ActionListener,KeyListener  {
 
     // pipe class
     class Pipe {
-		int x;
-		int y;
-		int width = 64;
-		int height = 512;
-		Image img;
-		boolean passed = false;
+    	private int x;
+    	private int y;
+    	private int width = 64;
+    	private int height = 512;
+    	private Image img;
+    	private boolean passed = false;
+    	public int getX() {
+			return x;
+		}
+
+		public void setX(int x) {
+			this.x = x;
+		}
+
+		public int getY() {
+			return y;
+		}
+
+		public void setY(int y) {
+			this.y = y;
+		}
+
+		public int getWidth() {
+			return width;
+		}
+
+		public void setWidth(int width) {
+			this.width = width;
+		}
+
+		public int getHeight() {
+			return height;
+		}
+
+		public void setHeight(int height) {
+			this.height = height;
+		}
+
+		public Image getImg() {
+			return img;
+		}
+
+		public void setImg(Image img) {
+			this.img = img;
+		}
+
+		public boolean isPassed() {
+			return passed;
+		}
+
+		public void setPassed(boolean passed) {
+			this.passed = passed;
+		}
+
+		
 
 		Pipe(Image img, int x, int y) {
 			this.img = img;
